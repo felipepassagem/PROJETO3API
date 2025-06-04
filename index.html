@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Classificador de Esportes</title>
+</head>
+<body>
+  <h1>Classificação de Imagem com IA</h1>
+
+  <input type="file" id="imageInput" accept="image/*"><br><br>
+  <img id="preview" src="" alt="Prévia" width="224" style="display:none;"><br><br>
+  <button onclick="enviarImagem()">Classificar</button>
+
+  <h2 id="resultado"></h2>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const resultado = document.getElementById('resultado');
+
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+      }
+    });
+
+    async function enviarImagem() {
+      const file = imageInput.files[0];
+      if (!file) {
+        alert('Selecione uma imagem primeiro.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/predict', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        if (data.error) {
+          resultado.innerText = 'Erro: ' + data.error;
+        } else {
+          resultado.innerText = `Classe prevista: ${data.class_index} (${data.class_name})`;
+        }
+      } catch (err) {
+        resultado.innerText = 'Erro na requisição: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
