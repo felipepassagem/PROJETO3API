@@ -3,15 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <title>Classificador de Esportes</title>
+  <link rel="shortcut icon" href="/images/iconSports.png" type="image/x-icon">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+
+
+  <style>
+
+    * {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+}
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("/images/backgroundSports.jpg");
+      background-color: #dcf1ff;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      text-align: center;
+      padding: 40px;
+      color: #333;
+    }
+
+    h1 {
+      color: #007acc;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin: auto;
+      margin-top: 20px;
+    }
+
+    input[type="file"] {
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+
+    #preview {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 5px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .previewImg{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button{
+      background-color: #007acc;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      margin-top: -10px;
+    }
+
+    button:hover {
+      background-color: #005f99;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .custom-upload-button {
+  background-color: #007acc;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.custom-upload-button:hover {
+  background-color: #005f99;
+}
+
+#imageInput {
+  display: none;
+}
+
+
+
+
+
+  </style>
 </head>
 <body>
-  <h1>Classificação de Imagem com IA</h1>
-
-  <input type="file" id="imageInput" accept="image/*"><br><br>
-  <img id="preview" src="" alt="Prévia" width="224" style="display:none;"><br><br>
-  <button onclick="enviarImagem()">Classificar</button>
-
-  <h2 id="resultado"></h2>
+  <div class="container">
+    <img src="/images/iconSports.png" alt="">
+    <h1>Classificação de Esporte por Imagem</h1>
+    
+    <input type="file" id="imageInput" accept="image/*">
+    <label for="imageInput" class="custom-upload-button">Escolher imagem</label>
+    
+    <div class="previewImg">
+      
+      <img id="preview" alt="Prévia da Imagem">
+    </div>
+    <br>
+    <button onclick="enviarImagem()">Classificar</button>
+    <h2 id="resultado"></h2>
+  </div>
+  
+<div class="container">
+  <h4>Esportes aceitos</h4>
+  <span id="lista-esportes"></span>
+</div>
 
   <script>
     const imageInput = document.getElementById('imageInput');
@@ -46,12 +166,82 @@
         if (data.error) {
           resultado.innerText = 'Erro: ' + data.error;
         } else {
-          resultado.innerText = `Classe prevista: ${data.class_index} (${data.class_name})`;
-        }
+  const esportesEN = [
+    'air hockey', 'ampute football', 'archery', 'arm wrestling', 'axe throwing',
+    'balance beam', 'barell racing', 'baseball', 'basketball', 'baton twirling',
+    'bike polo', 'billiards', 'bmx', 'bobsled', 'bowling'
+  ];
+
+  const esportesPT = {
+    'air hockey': 'Air hockey',
+    'ampute football': 'Futebol para amputados',
+    'archery': 'Arco e flecha',
+    'arm wrestling': 'Queda de braço',
+    'axe throwing': 'Arremesso de machado',
+    'balance beam': 'Trave de equilíbrio',
+    'barell racing': 'Corrida de tambores',
+    'baseball': 'Beisebol',
+    'basketball': 'Basquete',
+    'baton twirling': 'Malabarismo com bastão',
+    'bike polo': 'Polo de bicicleta',
+    'billiards': 'Sinuca',
+    'bmx': 'BMX',
+    'bobsled': 'Bobsled',
+    'bowling': 'Boliche'
+  };
+
+  const esporteCorrespondente = esportesEN.find(esporte =>
+    data.class_name.toLowerCase().includes(esporte)
+  );
+
+  if (esporteCorrespondente) {
+    resultado.innerText = `${esportesPT[esporteCorrespondente]}`;
+  } else {
+    resultado.innerText = `${data.class_index} (${data.class_name})`;
+  }
+}
+
       } catch (err) {
         resultado.innerText = 'Erro na requisição: ' + err.message;
       }
     }
+
+
+
+
+      const esportesEN = [
+    'air hockey', 'ampute football', 'archery', 'arm wrestling', 'axe throwing',
+    'balance beam', 'barell racing', 'baseball', 'basketball', 'baton twirling',
+    'bike polo', 'billiards', 'bmx', 'bobsled', 'bowling'
+  ];
+
+  const esportesPT = {
+    'air hockey': 'Air hockey',
+    'ampute football': 'Futebol para amputados',
+    'archery': 'Arco e flecha',
+    'arm wrestling': 'Queda de braço',
+    'axe throwing': 'Arremesso de machado',
+    'balance beam': 'Trave de equilíbrio',
+    'barell racing': 'Corrida de tambores',
+    'baseball': 'Beisebol',
+    'basketball': 'Basquete',
+    'baton twirling': 'Malabarismo com bastão',
+    'bike polo': 'Polo de bicicleta',
+    'billiards': 'Sinuca',
+    'bmx': 'BMX',
+    'bobsled': 'Bobsled',
+    'bowling': 'Boliche'
+  };
+
+  const ul = document.getElementById('lista-esportes');
+
+esportesEN.forEach(esporte => {
+  const br = document.createElement('br');
+  const texto = document.createTextNode(esportesPT[esporte] || esporte);
+  ul.appendChild(texto);
+  ul.appendChild(br);
+});
+
   </script>
 </body>
 </html>
