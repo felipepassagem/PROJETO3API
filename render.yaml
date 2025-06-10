@@ -1,9 +1,12 @@
+# render.yaml
+
 services:
   - type: web
-    name: classificador-esportes
-    runtime: python
-    buildCommand: ""
-    startCommand: python app.py
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.10
+    name: classificador-esportes # Um nome mais claro para o projeto
+    env: python
+    # AVISO: TensorFlow usa muita memória. O plano 'free' tem 512MB e
+    # pode não ser suficiente. Se o build falhar ou a aplicação
+    # reiniciar com frequência, considere usar o plano 'Starter'.
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn main:app"
