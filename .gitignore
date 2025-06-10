@@ -1,0 +1,35 @@
+# Arquivo .gitignore para um projeto Python com Flask e Machine Learning
+
+# Ambientes Virtuais
+# Impede que você envie gigabytes de bibliotecas para o repositório.
+# O Render instalará as bibliotecas a partir do requirements.txt.
+venv/
+env/
+.venv/
+ENV/
+
+# Arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de configuração de IDEs e Editores
+.vscode/
+.idea/
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente
+# Nunca envie arquivos com senhas ou chaves de API
+.env
+
+# Arquivos de build e distribuição do Python
+build/
+dist/
+*.egg-info/
+
+# Arquivos de logs
+*.log
